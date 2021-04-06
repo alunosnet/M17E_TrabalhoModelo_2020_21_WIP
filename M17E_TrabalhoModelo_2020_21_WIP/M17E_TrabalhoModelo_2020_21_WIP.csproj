@@ -127,15 +127,40 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\EstadiasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\QuartosController.cs" />
     <Compile Include="Data\M17E_TrabalhoModelo_2020_21_WIPContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\202104060843065_InitialCreate.cs" />
+    <Compile Include="Migrations\202104060843065_InitialCreate.Designer.cs">
+      <DependentUpon>202104060843065_InitialCreate.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104060946178_Quartos.cs" />
+    <Compile Include="Migrations\202104060946178_Quartos.designer.cs">
+      <DependentUpon>202104060946178_Quartos.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104061005487_estadia.cs" />
+    <Compile Include="Migrations\202104061005487_estadia.Designer.cs">
+      <DependentUpon>202104061005487_estadia.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\202104061006515_estadia2.cs" />
+    <Compile Include="Migrations\202104061006515_estadia2.Designer.cs">
+      <DependentUpon>202104061006515_estadia2.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Cliente.cs" />
+    <Compile Include="Models\Estadia.cs" />
+    <Compile Include="Models\Quarto.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="App_Data\M17E_TrabalhoModelo_2020_21_WIPContext-20210406092425.mdf" />
+    <Content Include="App_Data\M17E_TrabalhoModelo_2020_21_WIPContext-20210406092425_log.ldf">
+      <DependentUpon>M17E_TrabalhoModelo_2020_21_WIPContext-20210406092425.mdf</DependentUpon>
+    </Content>
     <Content Include="Content\bootstrap-theme.css" />
     <Content Include="Content\bootstrap-theme.min.css" />
     <Content Include="Content\bootstrap.css" />
@@ -176,10 +201,18 @@
     <Content Include="Views\Clientes\Details.cshtml" />
     <Content Include="Views\Clientes\Edit.cshtml" />
     <Content Include="Views\Clientes\Index.cshtml" />
+    <Content Include="Views\Quartos\Create.cshtml" />
+    <Content Include="Views\Quartos\Delete.cshtml" />
+    <Content Include="Views\Quartos\Details.cshtml" />
+    <Content Include="Views\Quartos\Edit.cshtml" />
+    <Content Include="Views\Quartos\Index.cshtml" />
+    <Content Include="Views\Estadias\Create.cshtml" />
+    <Content Include="Views\Estadias\Delete.cshtml" />
+    <Content Include="Views\Estadias\Details.cshtml" />
+    <Content Include="Views\Estadias\Edit.cshtml" />
+    <Content Include="Views\Estadias\Index.cshtml" />
   </ItemGroup>
-  <ItemGroup>
-    <Folder Include="App_Data\" />
-  </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />
@@ -192,6 +225,20 @@
     <None Include="packages.config" />
     <Content Include="Scripts\jquery-3.4.1.slim.min.map" />
     <Content Include="Scripts\jquery-3.4.1.min.map" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Migrations\202104060843065_InitialCreate.resx">
+      <DependentUpon>202104060843065_InitialCreate.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104060946178_Quartos.resx">
+      <DependentUpon>202104060946178_Quartos.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104061005487_estadia.resx">
+      <DependentUpon>202104061005487_estadia.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\202104061006515_estadia2.resx">
+      <DependentUpon>202104061006515_estadia2.cs</DependentUpon>
+    </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

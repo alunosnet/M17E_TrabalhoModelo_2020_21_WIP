@@ -20,5 +20,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Data
         }
 
         public System.Data.Entity.DbSet<M17E_TrabalhoModelo_2020_21_WIP.Models.Cliente> Clientes { get; set; }
+        public System.Data.Entity.DbSet<M17E_TrabalhoModelo_2020_21_WIP.Models.Quarto> Quartos { get; set; }
+        public System.Data.Entity.DbSet<M17E_TrabalhoModelo_2020_21_WIP.Models.Estadia> Estadias { get; set; }
     }
 }

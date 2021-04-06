@@ -12,115 +12,107 @@ using M17E_TrabalhoModelo_2020_21_WIP.Models;
 
 namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
 {
-    public class ClientesController : Controller
+    public class QuartosController : Controller
     {
         private M17E_TrabalhoModelo_2020_21_WIPContext db = new M17E_TrabalhoModelo_2020_21_WIPContext();
 
-        // GET: Clientes
+        // GET: Quartos
         public async Task<ActionResult> Index()
         {
-            return View(await db.Clientes.ToListAsync());
+            return View(await db.Quartos.ToListAsync());
         }
 
-        // GET: Clientes/Details/5
+        // GET: Quartos/Details/5
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = await db.Clientes.FindAsync(id);
-            if (cliente == null)
+            Quarto quarto = await db.Quartos.FindAsync(id);
+            if (quarto == null)
             {
                 return HttpNotFound();
             }
-            return View(cliente);
+            return View(quarto);
         }
 
-        // GET: Clientes/Create
+        // GET: Quartos/Create
         public ActionResult Create()
         {
             return View();
         }
 
-        // POST: Clientes/Create
+        // POST: Quartos/Create
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Create([Bind(Include = "ClienteID,Nome,Morada,CP,Email,Telefone,DataNascimento")] Cliente cliente)
+        public async Task<ActionResult> Create([Bind(Include = "ID,piso,lotacao,custo_dia,casa_banho,estado")] Quarto quarto)
         {
             if (ModelState.IsValid)
             {
-                //validar email repetido
-                var contar = db.Clientes.Where(c => c.Email == cliente.Email).ToList();
-                if (contar.Count > 0)
-                {
-                    ModelState.AddModelError("Email", "O email indicado já existe.");
-                    return View(cliente);
-                }
-                db.Clientes.Add(cliente);
+                db.Quartos.Add(quarto);
                 await db.SaveChangesAsync();
-                //TODO:guardar fotografia
                 return RedirectToAction("Index");
             }
 
-            return View(cliente);
+            return View(quarto);
         }
 
-        // GET: Clientes/Edit/5
+        // GET: Quartos/Edit/5
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = await db.Clientes.FindAsync(id);
-            if (cliente == null)
+            Quarto quarto = await db.Quartos.FindAsync(id);
+            if (quarto == null)
             {
                 return HttpNotFound();
             }
-            return View(cliente);
+            return View(quarto);
         }
 
-        // POST: Clientes/Edit/5
+        // POST: Quartos/Edit/5
         // To protect from overposting attacks, enable the specific properties you want to bind to, for 
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<ActionResult> Edit([Bind(Include = "ClienteID,Nome,Morada,CP,Email,Telefone,DataNascimento")] Cliente cliente)
+        public async Task<ActionResult> Edit([Bind(Include = "ID,piso,lotacao,custo_dia,casa_banho,estado")] Quarto quarto)
         {
             if (ModelState.IsValid)
             {
-                db.Entry(cliente).State = EntityState.Modified;
+                db.Entry(quarto).State = EntityState.Modified;
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            return View(cliente);
+            return View(quarto);
         }
 
-        // GET: Clientes/Delete/5
+        // GET: Quartos/Delete/5
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
             {
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
-            Cliente cliente = await db.Clientes.FindAsync(id);
-            if (cliente == null)
+            Quarto quarto = await db.Quartos.FindAsync(id);
+            if (quarto == null)
             {
                 return HttpNotFound();
             }
-            return View(cliente);
+            return View(quarto);
         }
 
-        // POST: Clientes/Delete/5
+        // POST: Quartos/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
-            Cliente cliente = await db.Clientes.FindAsync(id);
-            db.Clientes.Remove(cliente);
+            Quarto quarto = await db.Quartos.FindAsync(id);
+            db.Quartos.Remove(quarto);
             await db.SaveChangesAsync();
             return RedirectToAction("Index");
         }
