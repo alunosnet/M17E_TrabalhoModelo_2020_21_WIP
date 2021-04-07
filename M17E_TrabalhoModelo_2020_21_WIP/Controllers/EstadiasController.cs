@@ -20,6 +20,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
         public async Task<ActionResult> Index()
         {
             var estadias = db.Estadias.Include(e => e.cliente).Include(e => e.quarto);
+
             return View(await estadias.ToListAsync());
         }
 
@@ -35,7 +36,11 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
             {
                 return HttpNotFound();
             }
-            //TODO: mostrar detalhes do cliente e do quarto
+            
+            var cliente = await db.Clientes.FindAsync(estadia.ClienteID);
+            var quarto = await db.Quartos.FindAsync(estadia.QuartoID);
+            estadia.quarto = quarto;
+            estadia.cliente = cliente;
             return View(estadia);
         }
 
@@ -86,12 +91,13 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
                 return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
             }
             Estadia estadia = await db.Estadias.FindAsync(id);
-            if (estadia == null)
+            if (estadia == null || estadia.valor_pago!=0)
             {
                 return HttpNotFound();
             }
             ViewBag.ClienteID = new SelectList(db.Clientes, "ClienteID", "Nome", estadia.ClienteID);
-            ViewBag.QuartoID = new SelectList(db.Quartos.Where(q => q.estado == true), "ID", "ID", estadia.QuartoID);
+
+            ViewBag.QuartoID = new SelectList(db.Quartos.Where(q => q.estado == true || q.ID==estadia.QuartoID), "ID", "ID", estadia.QuartoID);
             return View(estadia);
         }
 
@@ -109,7 +115,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
                 return RedirectToAction("Index");
             }
             ViewBag.ClienteID = new SelectList(db.Clientes, "ClienteID", "Nome", estadia.ClienteID);
-            ViewBag.QuartoID = new SelectList(db.Quartos.Where(q => q.estado == true), "ID", "ID", estadia.QuartoID);
+            ViewBag.QuartoID = new SelectList(db.Quartos.Where(q => q.estado == true || q.ID == estadia.QuartoID), "ID", "ID", estadia.QuartoID);
             return View(estadia);
         }
 
@@ -139,10 +145,53 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
         //    return RedirectToAction("Index");
         //}
 
-        //TODO:Lista das estadias em curso
+        //Lista das estadias em curso
+        public async Task<ActionResult> ListarEstadiasEmCurso()
+        {
+            var estadias = db.Estadias.Where(e => e.valor_pago == 0 && e.data_entrada == e.data_saida)
+                                        .Include(e => e.cliente)
+                                        .Include(e => e.quarto);
+            return View(await estadias.ToListAsync());
+        }
+        //processar saída
+        public async Task<ActionResult> ProcessaSaida(int? id)
+        {
+            if (id == null)
+            {
+                return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+            }
+            Estadia estadia = await db.Estadias.FindAsync(id);
+            if (estadia == null)
+            {
+                return HttpNotFound();
+            }
+            //dados do quarto
+            var dadosQuarto = await db.Quartos.FindAsync(estadia.QuartoID);
+            //calcular o custo a pagar
+            TimeSpan dias = DateTime.Now.Date.Subtract(estadia.data_entrada.Date);
+            int diasPagar = (int)(dias.TotalDays <= 0 ? 1 : dias.TotalDays);
+            estadia.valor_pago = (decimal)diasPagar * dadosQuarto.custo_dia;
+            estadia.data_saida = DateTime.Now;
+            ViewBag.dias = diasPagar;
+            //dados do cliente
+            estadia.cliente = await db.Clientes.FindAsync(estadia.ClienteID);
+            return View(estadia);
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ProcessaSaida(Estadia estadia)
+        {
+            //atualizar a estadia
+            db.Entry(estadia).State = EntityState.Modified;
+            //atualizar o quarto
+            var quarto = await db.Quartos.FindAsync(estadia.QuartoID);
+            quarto.estado = true;
+            db.Entry(quarto).CurrentValues.SetValues(quarto);
+            await db.SaveChangesAsync();
 
-        //TODO:processar saída
-
+            //redirecionar
+            return RedirectToAction("ListarEstadiasEmCurso");
+        }
         protected override void Dispose(bool disposing)
         {
             if (disposing)

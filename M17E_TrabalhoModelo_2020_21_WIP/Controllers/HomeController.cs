@@ -26,5 +26,9 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
 
             return View();
         }
+        public string OlaMundo()
+        {
+            return "ola mundo";
+        }
     }
 }

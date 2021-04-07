@@ -19,6 +19,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
         // GET: Clientes
         public async Task<ActionResult> Index()
         {
+           
             return View(await db.Clientes.ToListAsync());
         }
 
@@ -34,6 +35,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
             {
                 return HttpNotFound();
             }
+            //incluir as estadias
             return View(cliente);
         }
 
@@ -50,6 +52,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
         [ValidateAntiForgeryToken]
         public async Task<ActionResult> Create([Bind(Include = "ClienteID,Nome,Morada,CP,Email,Telefone,DataNascimento")] Cliente cliente)
         {
+            
             if (ModelState.IsValid)
             {
                 //validar email repetido
@@ -61,7 +64,13 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
                 }
                 db.Clientes.Add(cliente);
                 await db.SaveChangesAsync();
-                //TODO:guardar fotografia
+                //guardar fotografia
+                HttpPostedFileBase fotografia = Request.Files["fotografia"];
+                if(fotografia!=null && fotografia.ContentLength > 0)
+                {
+                    string imagem = Server.MapPath("~/Fotos/") + cliente.ClienteID + ".jpg";
+                    fotografia.SaveAs(imagem);
+                }
                 return RedirectToAction("Index");
             }
 

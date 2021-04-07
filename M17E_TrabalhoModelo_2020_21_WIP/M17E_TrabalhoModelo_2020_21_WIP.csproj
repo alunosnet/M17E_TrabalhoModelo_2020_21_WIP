@@ -211,8 +211,12 @@
     <Content Include="Views\Estadias\Details.cshtml" />
     <Content Include="Views\Estadias\Edit.cshtml" />
     <Content Include="Views\Estadias\Index.cshtml" />
+    <Content Include="Views\Estadias\ListarEstadiasEmCurso.cshtml" />
+    <Content Include="Views\Estadias\ProcessaSaida.cshtml" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="Fotos\" />
+  </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />
     <Content Include="fonts\glyphicons-halflings-regular.woff" />

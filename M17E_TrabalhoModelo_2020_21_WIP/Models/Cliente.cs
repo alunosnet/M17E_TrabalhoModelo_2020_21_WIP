@@ -42,7 +42,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString ="{0:yyyy-MM-dd}",ApplyFormatInEditMode =true)]
         public DateTime DataNascimento { get; set; }
-        //TODO: lista das estadias
-
+        // lista das estadias
+        public virtual List<Estadia> listaEstadias { get; set; }
     }
 }

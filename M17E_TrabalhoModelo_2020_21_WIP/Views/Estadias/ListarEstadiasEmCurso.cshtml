@@ -1,0 +1,44 @@
+﻿@model IEnumerable<M17E_TrabalhoModelo_2020_21_WIP.Models.Estadia>
+
+@{
+    ViewBag.Title = "ListarEstadiasEmCurso";
+}
+
+<h2>Listar Estadias Em Curso</h2>
+
+<p>
+    @Html.ActionLink("Estadia nova", "Create") |  @Html.ActionLink("Lista total de estadias", "Index")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.cliente.Nome)
+        </th>
+        <th>
+            Quarto
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.data_entrada)
+        </th>
+        
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.cliente.Nome)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.quarto.ID)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.data_entrada)
+        </td>
+        
+        <td>
+            @Html.ActionLink("Check out", "ProcessaSaida", new { id=item.EstadiaID }) 
+    </tr>
+}
+
+</table>
