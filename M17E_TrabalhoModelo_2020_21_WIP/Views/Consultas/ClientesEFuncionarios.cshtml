@@ -1,0 +1,26 @@
+﻿@model IEnumerable<M17E_TrabalhoModelo_2020_21_WIP.Models.Todos>
+
+@{
+    ViewBag.Title = "ClientesEFuncionarios";
+}
+
+<h2>Clientes E Funcionarios</h2>
+
+
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.nome)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.nome)
+        </td>
+    </tr>
+}
+
+</table>

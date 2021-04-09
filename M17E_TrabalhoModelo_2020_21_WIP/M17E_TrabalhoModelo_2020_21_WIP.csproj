@@ -127,11 +127,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\ClientesController.cs" />
+    <Compile Include="Controllers\ConsultasController.cs" />
     <Compile Include="Controllers\EstadiasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
     <Compile Include="Controllers\LogoutController.cs" />
     <Compile Include="Controllers\QuartosController.cs" />
+    <Compile Include="Models\Todos.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Data\M17E_TrabalhoModelo_2020_21_WIPContext.cs" />
     <Compile Include="Global.asax.cs">
@@ -233,6 +235,11 @@
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
     <Content Include="Views\Login\Index.cshtml" />
+    <Content Include="Views\Consultas\Index.cshtml" />
+    <Content Include="Views\Consultas\PesquisaCliente.cshtml" />
+    <Content Include="Views\Consultas\PesquisaDinamica.cshtml" />
+    <Content Include="Views\Consultas\MelhorCliente.cshtml" />
+    <Content Include="Views\Consultas\ClientesEFuncionarios.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Fotos\" />
