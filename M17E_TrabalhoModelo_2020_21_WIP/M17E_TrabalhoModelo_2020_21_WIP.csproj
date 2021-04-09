@@ -129,12 +129,15 @@
     <Compile Include="Controllers\ClientesController.cs" />
     <Compile Include="Controllers\EstadiasController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\LogoutController.cs" />
     <Compile Include="Controllers\QuartosController.cs" />
     <Compile Include="Controllers\UsersController.cs" />
     <Compile Include="Data\M17E_TrabalhoModelo_2020_21_WIPContext.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helper\Utils.cs" />
     <Compile Include="Migrations\202104060843065_InitialCreate.cs" />
     <Compile Include="Migrations\202104060843065_InitialCreate.Designer.cs">
       <DependentUpon>202104060843065_InitialCreate.cs</DependentUpon>
@@ -160,6 +163,7 @@
       <DependentUpon>202104071156427_users-password.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
+    <Compile Include="Models\AppRoleProvider.cs" />
     <Compile Include="Models\Cliente.cs" />
     <Compile Include="Models\Estadia.cs" />
     <Compile Include="Models\Quarto.cs" />
@@ -228,9 +232,11 @@
     <Content Include="Views\Users\Details.cshtml" />
     <Content Include="Views\Users\Edit.cshtml" />
     <Content Include="Views\Users\Index.cshtml" />
+    <Content Include="Views\Login\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Fotos\" />
+    <Folder Include="Views\Logout\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="fonts\glyphicons-halflings-regular.woff2" />

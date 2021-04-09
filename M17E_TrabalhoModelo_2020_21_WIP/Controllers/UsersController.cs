@@ -14,17 +14,20 @@ using System.Text;
 
 namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
 {
+    [Authorize]
     public class UsersController : Controller
     {
         private M17E_TrabalhoModelo_2020_21_WIPContext db = new M17E_TrabalhoModelo_2020_21_WIPContext();
 
         // GET: Users
+        [Authorize(Roles ="Administrador")]
         public async Task<ActionResult> Index()
         {
             return View(await db.Users.ToListAsync());
         }
 
         // GET: Users/Details/5
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Details(int? id)
         {
             if (id == null)
@@ -40,6 +43,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
         }
 
         // GET: Users/Create
+        [Authorize(Roles = "Administrador")]
         public ActionResult Create()
         {
             //perfil
@@ -57,6 +61,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Create([Bind(Include = "UserID,nome,password,perfil,estado")] User user)
         {
             if (ModelState.IsValid)
@@ -102,6 +107,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
         }
 
         // GET: Users/Edit/5
+        [Authorize]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -113,12 +119,26 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
             {
                 return HttpNotFound();
             }
-            //TODO: se não é admin só pode editar o seu perfil
-            user.perfis = new[]
+            //e não é admin só pode editar o seu perfil
+            if (User.IsInRole("Utilizador"))
             {
-                new SelectListItem{Value="0",Text="Administrador" },
-                new SelectListItem{Value="1",Text="Utilizador"}
-            };
+                //verificar se o id é igual ao id user autenticado
+                var temp = db.Users.Where(u => u.nome == User.Identity.Name && id == u.UserID).FirstOrDefault();
+                if(temp==null)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                user.perfis = new[]
+                {
+                    new SelectListItem{Value="1",Text="Utilizador"}
+                };
+            }
+            else
+            {
+                user.perfis = new[]
+                {
+                    new SelectListItem{Value="0",Text="Administrador" },
+                    new SelectListItem{Value="1",Text="Utilizador"}
+                };
+            }
             return View(user);
         }
 
@@ -127,6 +147,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
         // more details see https://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Edit([Bind(Include = "UserID,nome,perfil,estado")] User user)
         {
             if (ModelState.IsValid)
@@ -141,15 +162,31 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
                 await db.SaveChangesAsync();
                 return RedirectToAction("Index");
             }
-            user.perfis = new[]
+            //e não é admin só pode editar o seu perfil
+            if (User.IsInRole("Utilizador"))
             {
-                new SelectListItem{Value="0",Text="Administrador" },
-                new SelectListItem{Value="1",Text="Utilizador"}
-            };
+                //verificar se o id é igual ao id user autenticado
+                var temp = db.Users.Where(u => u.nome == User.Identity.Name && user.UserID == u.UserID).FirstOrDefault();
+                if (temp == null)
+                    return new HttpStatusCodeResult(HttpStatusCode.BadRequest);
+                user.perfis = new[]
+                {
+                    new SelectListItem{Value="1",Text="Utilizador"}
+                };
+            }
+            else
+            {
+                user.perfis = new[]
+                {
+                    new SelectListItem{Value="0",Text="Administrador" },
+                    new SelectListItem{Value="1",Text="Utilizador"}
+                };
+            }
             return View(user);
         }
 
         // GET: Users/Delete/5
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)
@@ -167,6 +204,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
         // POST: Users/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> DeleteConfirmed(int id)
         {
             User user = await db.Users.FindAsync(id);

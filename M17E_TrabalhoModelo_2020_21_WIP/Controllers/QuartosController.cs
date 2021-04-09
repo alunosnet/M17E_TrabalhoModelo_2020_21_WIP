@@ -12,6 +12,7 @@ using M17E_TrabalhoModelo_2020_21_WIP.Models;
 
 namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
 {
+    [Authorize]
     public class QuartosController : Controller
     {
         private M17E_TrabalhoModelo_2020_21_WIPContext db = new M17E_TrabalhoModelo_2020_21_WIPContext();
@@ -38,6 +39,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
         }
 
         // GET: Quartos/Create
+        [Authorize(Roles ="Administrador")]
         public ActionResult Create()
         {
             return View();
@@ -61,6 +63,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
         }
 
         // GET: Quartos/Edit/5
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Edit(int? id)
         {
             if (id == null)
@@ -92,6 +95,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
         }
 
         // GET: Quartos/Delete/5
+        [Authorize(Roles = "Administrador")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)

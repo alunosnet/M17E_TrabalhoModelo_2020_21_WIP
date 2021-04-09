@@ -12,6 +12,7 @@ using M17E_TrabalhoModelo_2020_21_WIP.Models;
 
 namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
 {
+    [Authorize]
     public class ClientesController : Controller
     {
         private M17E_TrabalhoModelo_2020_21_WIPContext db = new M17E_TrabalhoModelo_2020_21_WIPContext();
@@ -109,6 +110,7 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
         }
 
         // GET: Clientes/Delete/5
+        [Authorize(Roles ="Administrador")]
         public async Task<ActionResult> Delete(int? id)
         {
             if (id == null)

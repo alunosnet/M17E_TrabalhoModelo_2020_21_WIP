@@ -12,6 +12,7 @@ using M17E_TrabalhoModelo_2020_21_WIP.Models;
 
 namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
 {
+    [Authorize]
     public class EstadiasController : Controller
     {
         private M17E_TrabalhoModelo_2020_21_WIPContext db = new M17E_TrabalhoModelo_2020_21_WIPContext();
