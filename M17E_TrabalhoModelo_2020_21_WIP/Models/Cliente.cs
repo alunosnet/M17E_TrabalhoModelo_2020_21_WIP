@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using System.Web;
 
@@ -42,6 +43,9 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Models
         [DataType(DataType.Date)]
         [DisplayFormat(DataFormatString ="{0:yyyy-MM-dd}",ApplyFormatInEditMode =true)]
         public DateTime DataNascimento { get; set; }
+
+        [NotMapped]
+        public int Idade { get; set; }
         // lista das estadias
         public virtual List<Estadia> listaEstadias { get; set; }
     }
