@@ -17,6 +17,8 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Data
     
         public M17E_TrabalhoModelo_2020_21_WIPContext() : base("name=M17E_TrabalhoModelo_2020_21_WIPContext")
         {
+            //para desativar a criação da base de dados antes de fazer o publish do site
+            //Database.SetInitializer<M17E_TrabalhoModelo_2920_WIPContext>(null);
         }
 
         public System.Data.Entity.DbSet<M17E_TrabalhoModelo_2020_21_WIP.Models.Cliente> Clientes { get; set; }
