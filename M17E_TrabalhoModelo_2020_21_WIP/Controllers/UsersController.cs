@@ -11,6 +11,7 @@ using M17E_TrabalhoModelo_2020_21_WIP.Data;
 using M17E_TrabalhoModelo_2020_21_WIP.Models;
 using System.Security.Cryptography;
 using System.Text;
+using System.Web.Security;
 
 namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
 {
@@ -153,16 +154,22 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Controllers
             if (ModelState.IsValid)
             {
                 var u =await db.Users.FindAsync(user.UserID);
+                //se estiver a editar o user logado temos de atualizar o cookie
+                if (u.nome == User.Identity.Name)
+                    FormsAuthentication.SetAuthCookie(user.nome, false);
+
                 u.nome = user.nome;
                 u.perfil = user.perfil;
                 u.estado = user.estado;
-                //TODO: se não é admin só pode editar o seu perfil
 
                 db.Entry(u).State = EntityState.Modified;
                 await db.SaveChangesAsync();
-                return RedirectToAction("Index");
+                if (User.IsInRole("Administrador"))
+                    return RedirectToAction("Index");
+                else
+                    return RedirectToAction("Index", "Home");
             }
-            //e não é admin só pode editar o seu perfil
+            //se não é admin só pode editar o seu perfil
             if (User.IsInRole("Utilizador"))
             {
                 //verificar se o id é igual ao id user autenticado

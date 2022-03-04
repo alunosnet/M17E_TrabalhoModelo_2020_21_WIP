@@ -20,11 +20,6 @@ namespace M17E_TrabalhoModelo_2020_21_WIP.Models
         [Display(Name = "Palavra passe")]
         public string password { get; set; }
 
-        //[DataType(DataType.Password)]
-        //[Display(Name = "Confirmar a palavra passe")]
-        //[System.ComponentModel.DataAnnotations.Compare("password",ErrorMessage ="As palavras passe não são iguais")]
-        //public string confirmaPassword { get; set; }
-
         [Required(ErrorMessage = "Indique o perfil")]
         [Display(Name = "Perfil do utilizador")]
         public int perfil { get; set; }
